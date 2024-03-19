@@ -1,11 +1,11 @@
 version: 0.2
-
-
-   
 phases:
+  pre_build:
+    commands:
+      - docker pull katalonstudio/katalon
   build:
     commands:
-      -/katalon/katalon/source katalonstudio/katalon katalon-execute.sh -apiKey=9b26b1f9-8b64-4c42-b5d9-1583bf3ae781 -browserType="Chrome" -retry=0 -statusDelay=15 -testSuitePath="Test Suites/TS_RegressionTest"
+      - docker run -t --rm -v "$(pwd)":/katalon/katalon/source katalonstudio/katalon katalon-execute.sh -apiKey=9b26b1f9-8b64-4c42-b5d9-1583bf3ae781 -browserType="Chrome" -retry=0 -statusDelay=15 -testSuitePath="Test Suites/TS_RegressionTest"
 artifacts:
   files:
     - report/*
@@ -13,5 +13,3 @@ reports: #New
   KatalonTestReports: # CodeBuild will create a report group called "KatalonTetReport".
     files: #Store all of the files
       - 'report/JUnit_Report.xml'
-
-
